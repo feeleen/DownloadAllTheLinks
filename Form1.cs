@@ -21,12 +21,13 @@ namespace DownloaderAllTheLinks
 		private int sortColumn = -1;
 		//RootObject root = null;
 
-		List<string> office = new List<string> { "pdf", "doc", "docx", "xls", "xlsx", "odt", "rtf", "txt", "ppt", "pptx", "ods","xps","csv"};
+		List<string> office = new List<string> { "pdf", "doc", "docx", "xls", "xlsx", "odt", "rtf", "txt", "ppt", "pptx", "ods","xps","csv","html", "shtml"};
 		List<string> images = new List<string> { "png", "tiff", "jpg", "jpeg", "gif", "ico"};
 		List<string> archives = new List<string> { "rar", "zip", "tar", "7z"};
 
 		string placeholder = "placeholder";
 		string regPattern = @"(<a.+href=""([^\""]+\.(placeholder)){1}\""([^>]*)>((?:.(?!\<\/a\>))*.)<\/a>)";
+		string alternateRegPattern = @"(<a([\s\S](?!>))*?title=""(([\s\S](?!>))*?(placeholder))[\s\S]*?""[\s\S]*?>)";
 
 		public Form1()
 		{
@@ -45,6 +46,7 @@ namespace DownloaderAllTheLinks
 		{
 			using (WebClient client = new WebClient())
 			{
+				client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
 				client.Encoding = Encoding.UTF8;
 				client.DownloadStringCompleted += Client_DownloadStringCompleted;
 				client.DownloadStringAsync(new Uri(url));
@@ -91,6 +93,47 @@ namespace DownloaderAllTheLinks
 				lvi.Checked = true;
 				listView1.Items.Add(lvi); 
 			}
+
+			// variant 2
+			if (alternateWayBox.Checked)
+			{
+				CurrentRegPattern = alternateRegPattern.Replace(placeholder, String.Join("|", fileTypes));
+				reg = new Regex(CurrentRegPattern, RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+				host = new Uri(textBox1.Text);
+				foreach (Match m in reg.Matches(text))
+				{
+					string link = m.Groups[1].Value;
+					if (link.Contains("href"))
+					{
+						MatchCollection coll = Regex.Matches(link, @"(href="")(([\s\S])+?)("")", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+						foreach (Match mx in coll)
+						{
+							if (mx.Groups[2].Value.Contains("http"))
+							{
+								link = mx.Groups[2].Value;
+							}
+						}
+					}
+					string fullLink = "";
+					if (link.StartsWith("/"))
+						fullLink = host.Scheme + Uri.SchemeDelimiter + host.Host + link;
+					else if (link.StartsWith("http"))
+						fullLink = link;
+					else
+						fullLink = host.Scheme + Uri.SchemeDelimiter + host.Host + "/" + link;
+
+					ListViewItem lvi = new ListViewItem(fullLink);
+					if (m.Groups[3].Value.Length > 0)
+						lvi.SubItems.Add(m.Groups[3].Value);
+					else if (UseFileNamesBox.Checked)
+						lvi.SubItems.Add(new Uri(fullLink).Segments.LastOrDefault());
+					else
+						lvi.SubItems.Add(m.Groups[5].Value);
+					lvi.Checked = true;
+					listView1.Items.Add(lvi);
+				}
+			}
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -106,10 +149,15 @@ namespace DownloaderAllTheLinks
 				if (lvi.Checked)
 				{
 					string localFile = dir + "\\" + lvi.SubItems[1].Text + "." + lvi.Text.Substring(lvi.Text.LastIndexOf('.'));
+					if (UseFileNamesBox.Checked)
+					{
+						localFile = dir + "\\" + lvi.SubItems[1].Text;
+					}
 					localFile = localFile.Replace("...", ".").Replace("..", ".");
 					string UriString = lvi.Text;
 					using (WebClient client = new WebClient())
 					{
+						client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
 						client.DownloadFileAsync(new Uri(UriString), localFile);
 						//client.DownloadFile(new Uri(UriString), localFile);
 					}

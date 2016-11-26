@@ -45,6 +45,7 @@
 			this.button3 = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.UseFileNamesBox = new System.Windows.Forms.CheckBox();
+			this.alternateWayBox = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// listView1
@@ -218,12 +219,24 @@
 			this.UseFileNamesBox.Text = "Use File Names";
 			this.UseFileNamesBox.UseVisualStyleBackColor = true;
 			// 
+			// alternateWayBox
+			// 
+			this.alternateWayBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.alternateWayBox.AutoSize = true;
+			this.alternateWayBox.Location = new System.Drawing.Point(615, 41);
+			this.alternateWayBox.Name = "alternateWayBox";
+			this.alternateWayBox.Size = new System.Drawing.Size(107, 17);
+			this.alternateWayBox.TabIndex = 4;
+			this.alternateWayBox.Text = "Try alternate way";
+			this.alternateWayBox.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(815, 440);
 			this.Controls.Add(this.UseFileNamesBox);
+			this.Controls.Add(this.alternateWayBox);
 			this.Controls.Add(this.ImagesBox);
 			this.Controls.Add(this.ArchivesBox);
 			this.Controls.Add(this.OfficeBox);
@@ -263,6 +276,7 @@
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.CheckBox UseFileNamesBox;
+		private System.Windows.Forms.CheckBox alternateWayBox;
 	}
 }
 
