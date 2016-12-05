@@ -1,4 +1,4 @@
 # DownloadAllTheLinks
-A program to download all the downloadable links from the web page
+A program to asynchronously download all the downloadable links from the web page.. almost all..
 
-![Screenshot](https://snag.gy/n0SkE7.jpg)
+![Screenshot](https://i.snag.gy/deFZgE.jpg)
