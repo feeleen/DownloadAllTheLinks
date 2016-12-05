@@ -46,6 +46,12 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.UseFileNamesBox = new System.Windows.Forms.CheckBox();
 			this.alternateWayBox = new System.Windows.Forms.CheckBox();
+			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.ProgressBox = new System.Windows.Forms.ToolStripProgressBar();
+			this.StatusBox = new System.Windows.Forms.ToolStripStatusLabel();
+			this.InvertBtn = new System.Windows.Forms.Button();
+			this.button4 = new System.Windows.Forms.Button();
+			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// listView1
@@ -61,7 +67,7 @@
 			this.listView1.GridLines = true;
 			this.listView1.Location = new System.Drawing.Point(12, 86);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(710, 318);
+			this.listView1.Size = new System.Drawing.Size(716, 337);
 			this.listView1.TabIndex = 0;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
@@ -81,7 +87,7 @@
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.button1.Location = new System.Drawing.Point(728, 9);
+			this.button1.Location = new System.Drawing.Point(734, 9);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(75, 56);
 			this.button1.TabIndex = 1;
@@ -95,7 +101,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox1.Location = new System.Drawing.Point(12, 12);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(710, 20);
+			this.textBox1.Size = new System.Drawing.Size(716, 20);
 			this.textBox1.TabIndex = 2;
 			// 
 			// label1
@@ -110,7 +116,7 @@
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(728, 86);
+			this.button2.Location = new System.Drawing.Point(734, 183);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(75, 56);
 			this.button2.TabIndex = 1;
@@ -157,7 +163,7 @@
 			// CheckAllBtn
 			// 
 			this.CheckAllBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.CheckAllBtn.Location = new System.Drawing.Point(728, 148);
+			this.CheckAllBtn.Location = new System.Drawing.Point(734, 86);
 			this.CheckAllBtn.Name = "CheckAllBtn";
 			this.CheckAllBtn.Size = new System.Drawing.Size(75, 23);
 			this.CheckAllBtn.TabIndex = 1;
@@ -168,11 +174,11 @@
 			// UncheckAllBtn
 			// 
 			this.UncheckAllBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.UncheckAllBtn.Location = new System.Drawing.Point(728, 177);
+			this.UncheckAllBtn.Location = new System.Drawing.Point(734, 115);
 			this.UncheckAllBtn.Name = "UncheckAllBtn";
 			this.UncheckAllBtn.Size = new System.Drawing.Size(75, 23);
 			this.UncheckAllBtn.TabIndex = 1;
-			this.UncheckAllBtn.Text = "Uncheck All";
+			this.UncheckAllBtn.Text = "Check None";
 			this.UncheckAllBtn.UseVisualStyleBackColor = true;
 			this.UncheckAllBtn.Click += new System.EventHandler(this.UncheckAllBtn_Click);
 			// 
@@ -180,15 +186,15 @@
 			// 
 			this.FolderBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.FolderBox.Location = new System.Drawing.Point(87, 410);
+			this.FolderBox.Location = new System.Drawing.Point(87, 432);
 			this.FolderBox.Name = "FolderBox";
-			this.FolderBox.Size = new System.Drawing.Size(529, 20);
+			this.FolderBox.Size = new System.Drawing.Size(535, 20);
 			this.FolderBox.TabIndex = 2;
 			// 
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(622, 408);
+			this.button3.Location = new System.Drawing.Point(628, 430);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(100, 23);
 			this.button3.TabIndex = 1;
@@ -200,7 +206,7 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(9, 413);
+			this.label2.Location = new System.Drawing.Point(9, 435);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(72, 13);
 			this.label2.TabIndex = 3;
@@ -212,7 +218,7 @@
 			this.UseFileNamesBox.AutoSize = true;
 			this.UseFileNamesBox.Checked = true;
 			this.UseFileNamesBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.UseFileNamesBox.Location = new System.Drawing.Point(622, 66);
+			this.UseFileNamesBox.Location = new System.Drawing.Point(628, 66);
 			this.UseFileNamesBox.Name = "UseFileNamesBox";
 			this.UseFileNamesBox.Size = new System.Drawing.Size(100, 17);
 			this.UseFileNamesBox.TabIndex = 4;
@@ -223,18 +229,63 @@
 			// 
 			this.alternateWayBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.alternateWayBox.AutoSize = true;
-			this.alternateWayBox.Location = new System.Drawing.Point(615, 41);
+			this.alternateWayBox.Location = new System.Drawing.Point(621, 41);
 			this.alternateWayBox.Name = "alternateWayBox";
 			this.alternateWayBox.Size = new System.Drawing.Size(107, 17);
 			this.alternateWayBox.TabIndex = 4;
 			this.alternateWayBox.Text = "Try alternate way";
 			this.alternateWayBox.UseVisualStyleBackColor = true;
 			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ProgressBox,
+            this.StatusBox});
+			this.statusStrip1.Location = new System.Drawing.Point(0, 460);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(821, 22);
+			this.statusStrip1.TabIndex = 5;
+			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// ProgressBox
+			// 
+			this.ProgressBox.Name = "ProgressBox";
+			this.ProgressBox.Size = new System.Drawing.Size(300, 16);
+			// 
+			// StatusBox
+			// 
+			this.StatusBox.AutoSize = false;
+			this.StatusBox.Name = "StatusBox";
+			this.StatusBox.Size = new System.Drawing.Size(300, 17);
+			// 
+			// InvertBtn
+			// 
+			this.InvertBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.InvertBtn.Location = new System.Drawing.Point(734, 144);
+			this.InvertBtn.Name = "InvertBtn";
+			this.InvertBtn.Size = new System.Drawing.Size(75, 23);
+			this.InvertBtn.TabIndex = 1;
+			this.InvertBtn.Text = "Invert Sel.";
+			this.InvertBtn.UseVisualStyleBackColor = true;
+			this.InvertBtn.Click += new System.EventHandler(this.InvertBtn_Click);
+			// 
+			// button4
+			// 
+			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.button4.Location = new System.Drawing.Point(734, 430);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(75, 23);
+			this.button4.TabIndex = 1;
+			this.button4.Text = "Open Folder";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.button4_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(815, 440);
+			this.ClientSize = new System.Drawing.Size(821, 482);
+			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.UseFileNamesBox);
 			this.Controls.Add(this.alternateWayBox);
 			this.Controls.Add(this.ImagesBox);
@@ -244,8 +295,10 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.FolderBox);
 			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.InvertBtn);
 			this.Controls.Add(this.UncheckAllBtn);
 			this.Controls.Add(this.CheckAllBtn);
+			this.Controls.Add(this.button4);
 			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
@@ -253,6 +306,8 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Form1";
 			this.Text = "Download All The Links";
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -277,6 +332,11 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.CheckBox UseFileNamesBox;
 		private System.Windows.Forms.CheckBox alternateWayBox;
+		private System.Windows.Forms.StatusStrip statusStrip1;
+		private System.Windows.Forms.ToolStripProgressBar ProgressBox;
+		private System.Windows.Forms.ToolStripStatusLabel StatusBox;
+		private System.Windows.Forms.Button InvertBtn;
+		private System.Windows.Forms.Button button4;
 	}
 }
 
