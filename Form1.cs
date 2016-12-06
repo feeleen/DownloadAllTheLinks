@@ -156,7 +156,14 @@ namespace DownloaderAllTheLinks
 		private void button1_Click(object sender, EventArgs e)
 		{
 			StatusBox.Text = "";
-			LoadWebPage(textBox1.Text);
+			if (textBox1.Text.Length != 0)
+			{
+				LoadWebPage(textBox1.Text);
+			}
+			else
+			{
+				MessageBox.Show("You must specify URL!");
+			}
 		}
 
 		private async void button2_Click(object sender, EventArgs e)

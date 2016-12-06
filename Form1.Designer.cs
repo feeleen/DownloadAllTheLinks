@@ -51,6 +51,7 @@
 			this.StatusBox = new System.Windows.Forms.ToolStripStatusLabel();
 			this.InvertBtn = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
+			this.label3 = new System.Windows.Forms.Label();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -99,9 +100,9 @@
 			// 
 			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox1.Location = new System.Drawing.Point(12, 12);
+			this.textBox1.Location = new System.Drawing.Point(47, 12);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(716, 20);
+			this.textBox1.Size = new System.Drawing.Size(681, 20);
 			this.textBox1.TabIndex = 2;
 			// 
 			// label1
@@ -280,11 +281,21 @@
 			this.button4.UseVisualStyleBackColor = true;
 			this.button4.Click += new System.EventHandler(this.button4_Click);
 			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(12, 15);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(29, 13);
+			this.label3.TabIndex = 6;
+			this.label3.Text = "URL";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(821, 482);
+			this.Controls.Add(this.label3);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.UseFileNamesBox);
 			this.Controls.Add(this.alternateWayBox);
@@ -337,6 +348,7 @@
 		private System.Windows.Forms.ToolStripStatusLabel StatusBox;
 		private System.Windows.Forms.Button InvertBtn;
 		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.Label label3;
 	}
 }
 
