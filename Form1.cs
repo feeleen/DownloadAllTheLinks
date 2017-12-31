@@ -96,7 +96,22 @@ namespace DownloaderAllTheLinks
 					if (UseFileNamesBox.Checked)
 						lvi.SubItems.Add(new Uri(fullLink).Segments.LastOrDefault());
 					else
-						lvi.SubItems.Add(m.Groups[GetLinkTextGroupNumber()].Value);
+					{
+						if (InnerTextGroupNoBox.Text.Take(InnerTextGroupNoBox.Text.Length).All(char.IsDigit))
+						{
+							lvi.SubItems.Add(m.Groups[GetLinkTextGroupNumber()].Value);
+						}
+						else
+						{
+							object[] pars = new string[m.Groups.Count];
+							for (int i = 0; i < m.Groups.Count; i++)
+							{
+								pars[i] = m.Groups[i].Value;
+							}
+
+							lvi.SubItems.Add(String.Format(InnerTextGroupNoBox.Text, pars));
+						}
+					}
 					lvi.Checked = true;
 					listView1.Items.Add(lvi);
 				}
@@ -375,6 +390,30 @@ namespace DownloaderAllTheLinks
 		private void UpdateLinkTextBoxGroupState()
 		{
 			InnerTextGroupNoBox.Enabled = !UseFileNamesBox.Checked;
+		}
+
+		private void listView1_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Control && e.KeyCode == Keys.C)
+			{
+				CopyListBox(listView1);
+			}
+		}
+
+		public void CopyListBox(ListView list)
+		{
+
+			StringBuilder sb = new StringBuilder();
+			foreach (var item in list.SelectedItems)
+			{
+				ListViewItem l = item as ListViewItem;
+				if (l != null)
+					foreach (ListViewItem.ListViewSubItem sub in l.SubItems)
+						sb.Append(sub.Text + "\t");
+				sb.AppendLine();
+			}
+			Clipboard.SetDataObject(sb.ToString());
+
 		}
 	}
 

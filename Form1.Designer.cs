@@ -60,7 +60,6 @@
 			this.LinkGroupNoBox = new System.Windows.Forms.TextBox();
 			this.InnerTextGroupNoBox = new System.Windows.Forms.TextBox();
 			this.label8 = new System.Windows.Forms.Label();
-			this.label9 = new System.Windows.Forms.Label();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -82,6 +81,7 @@
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
 			this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
+			this.listView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listView1_KeyDown);
 			// 
 			// columnHeader1
 			// 
@@ -227,7 +227,7 @@
 			this.UseFileNamesBox.AutoSize = true;
 			this.UseFileNamesBox.Checked = true;
 			this.UseFileNamesBox.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.UseFileNamesBox.Location = new System.Drawing.Point(87, 143);
+			this.UseFileNamesBox.Location = new System.Drawing.Point(15, 143);
 			this.UseFileNamesBox.Name = "UseFileNamesBox";
 			this.UseFileNamesBox.Size = new System.Drawing.Size(145, 17);
 			this.UseFileNamesBox.TabIndex = 4;
@@ -355,29 +355,20 @@
 			// 
 			// InnerTextGroupNoBox
 			// 
-			this.InnerTextGroupNoBox.Location = new System.Drawing.Point(446, 141);
+			this.InnerTextGroupNoBox.Location = new System.Drawing.Point(463, 141);
 			this.InnerTextGroupNoBox.Name = "InnerTextGroupNoBox";
-			this.InnerTextGroupNoBox.Size = new System.Drawing.Size(36, 20);
+			this.InnerTextGroupNoBox.Size = new System.Drawing.Size(259, 20);
 			this.InnerTextGroupNoBox.TabIndex = 12;
 			this.InnerTextGroupNoBox.Text = "3";
 			// 
 			// label8
 			// 
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(285, 144);
+			this.label8.Location = new System.Drawing.Point(167, 144);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(155, 13);
+			this.label8.Size = new System.Drawing.Size(290, 13);
 			this.label8.TabIndex = 13;
-			this.label8.Text = "Anchor inner text group number";
-			// 
-			// label9
-			// 
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(12, 144);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(277, 13);
-			this.label9.TabIndex = 13;
-			this.label9.Text = "If you don\'t                                                            then set";
+			this.label8.Text = "Or  Set string format with groups (for example: {1}.part{1}.rar)";
 			// 
 			// Form1
 			// 
@@ -411,7 +402,6 @@
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.listView1);
-			this.Controls.Add(this.label9);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(600, 39);
 			this.Name = "Form1";
@@ -456,7 +446,6 @@
 		private System.Windows.Forms.TextBox LinkGroupNoBox;
 		private System.Windows.Forms.TextBox InnerTextGroupNoBox;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Label label9;
 	}
 }
 
