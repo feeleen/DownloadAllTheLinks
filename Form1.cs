@@ -21,16 +21,15 @@ namespace DownloaderAllTheLinks
 	public partial class Form1 : Form
 	{
 		private int sortColumn = -1;
-		//RootObject root = null;
-
+		
 		List<string> office = new List<string> { "pdf", "doc", "docx", "xls", "xlsx", "odt", "rtf", "txt", "ppt", "pptx", "ods","xps","csv","html", "shtml"};
 		List<string> images = new List<string> { "png", "tiff", "jpg", "jpeg", "gif", "ico"};
 		List<string> archives = new List<string> { "rar", "zip", "tar", "7z"};
 
-		string placeholder = "placeholder";
-		string regPattern = @"(<a.+href=""([^\""]+\.?(placeholder)?){1}\""([^>]*)>((?:.(?!\<\/a\>))*.?)<\/a>)";
-		string alternateRegPattern = @"(<a([\s\S](?!>))*?title=""(([\s\S](?!>))*?(placeholder))[\s\S]*?""[\s\S]*?>)";
+		string placeholder = "fileTypes";
 
+		const string regPattern = @"(<a.+?href=""([^\""]+?)"".*?>(.+?(fileTypes))<\/a)";
+		
 		public Form1()
 		{
 			InitializeComponent();
@@ -40,18 +39,26 @@ namespace DownloaderAllTheLinks
 			{
 				Directory.CreateDirectory(downloadsPath);
 			}
+			RegexBox.Text = regPattern;
 			FolderBox.Text = downloadsPath;
-			
+			UpdateLinkTextBoxGroupState();
 		}
 
 		private void LoadWebPage(string url)
 		{
-			using (WebClient client = new WebClient())
+			try
 			{
-				client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-				client.Encoding = Encoding.UTF8;
-				client.DownloadStringCompleted += Client_DownloadStringCompleted;
-				client.DownloadStringAsync(new Uri(url));
+				using (WebClient client = new WebClient())
+				{
+					client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+					client.Encoding = Encoding.UTF8;
+					client.DownloadStringCompleted += Client_DownloadStringCompleted;
+					client.DownloadStringAsync(new Uri(url));
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
 			}
 		}
 
@@ -64,56 +71,19 @@ namespace DownloaderAllTheLinks
 		{
 			listView1.Items.Clear();
 
-			Hashtable links = new Hashtable();
-
-			List<string> fileTypes = GetFileTypes(); 
-
-			string CurrentRegPattern = regPattern.Replace(placeholder, String.Join("|", fileTypes));
-			Regex reg = new Regex(CurrentRegPattern, RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-
-			Uri host = new Uri(textBox1.Text);
-			foreach (Match m in reg.Matches(text))
+			try
 			{
-				string link = m.Groups[2].Value;
-				string fullLink = "";
-				if (link.StartsWith("/"))
-					fullLink = host.Scheme + Uri.SchemeDelimiter + host.Host + link;
-				else if (link.StartsWith("http"))
-					fullLink = link;
-				else
-					fullLink = host.Scheme + Uri.SchemeDelimiter + host.Host + "/" + link;
+				Hashtable links = new Hashtable();
 
-				ListViewItem lvi = new ListViewItem(fullLink);
-				if (UseFileNamesBox.Checked)
-					lvi.SubItems.Add(new Uri(fullLink).Segments.LastOrDefault());
-				else
-					lvi.SubItems.Add(m.Groups[5].Value);
-				lvi.Checked = true;
-				listView1.Items.Add(lvi); 
-			}
+				List<string> fileTypes = GetFileTypes();
 
-			// variant 2
-			if (alternateWayBox.Checked)
-			{
-				CurrentRegPattern = alternateRegPattern.Replace(placeholder, String.Join("|", fileTypes));
-				reg = new Regex(CurrentRegPattern, RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-
-				host = new Uri(textBox1.Text);
+				string CurrentRegPattern = RegexBox.Text.Replace(placeholder, String.Join("|", fileTypes));
+				Regex reg = new Regex(CurrentRegPattern, RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+				
+				Uri host = new Uri(textBox1.Text);
 				foreach (Match m in reg.Matches(text))
 				{
-					string link = m.Groups[1].Value;
-					if (link.Contains("href"))
-					{
-						MatchCollection coll = Regex.Matches(link, @"(href="")(([\s\S])+?)("")", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
-						foreach (Match mx in coll)
-						{
-							if (mx.Groups[2].Value.Contains("http"))
-							{
-								link = mx.Groups[2].Value;
-								break;
-							}
-						}
-					}
+					string link = m.Groups[GetLinkGroupNumber()].Value;
 					string fullLink = "";
 					if (link.StartsWith("/"))
 						fullLink = host.Scheme + Uri.SchemeDelimiter + host.Host + link;
@@ -122,22 +92,32 @@ namespace DownloaderAllTheLinks
 					else
 						fullLink = host.Scheme + Uri.SchemeDelimiter + host.Host + "/" + link;
 
-					if (!links.ContainsKey(fullLink))
-					{
-						ListViewItem lvi = new ListViewItem(fullLink);
-						if (m.Groups[3].Value.Length > 0)
-							lvi.SubItems.Add(m.Groups[3].Value);
-						else if (UseFileNamesBox.Checked)
-							lvi.SubItems.Add(new Uri(fullLink).Segments.LastOrDefault());
-						else
-							lvi.SubItems.Add(m.Groups[5].Value);
-						lvi.Checked = true;
-						listView1.Items.Add(lvi);
-						links[fullLink] = m.Groups[3].Value;
-					}
-
+					ListViewItem lvi = new ListViewItem(fullLink);
+					if (UseFileNamesBox.Checked)
+						lvi.SubItems.Add(new Uri(fullLink).Segments.LastOrDefault());
+					else
+						lvi.SubItems.Add(m.Groups[GetLinkTextGroupNumber()].Value);
+					lvi.Checked = true;
+					listView1.Items.Add(lvi);
 				}
+
+				
 			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
+		}
+
+
+		private int GetLinkGroupNumber()
+		{
+			return Convert.ToInt32(LinkGroupNoBox.Text);
+		}
+
+		private int GetLinkTextGroupNumber()
+		{
+			return Convert.ToInt32(InnerTextGroupNoBox.Text);
 		}
 
 		private List<string> GetFileTypes()
@@ -377,8 +357,24 @@ namespace DownloaderAllTheLinks
 			StartInformation.FileName = FolderBox.Text;
 
 			Process process = Process.Start(StartInformation);
+		}
 
-			//process.EnableRaisingEvents = true;
+		private void ResetRegExBtn_Click(object sender, EventArgs e)
+		{
+			RegexBox.Text = regPattern;
+			InnerTextGroupNoBox.Text = "5";
+			LinkGroupNoBox.Text = "2";
+		}
+
+		
+		private void UseFileNamesBox_CheckedChanged(object sender, EventArgs e)
+		{
+			UpdateLinkTextBoxGroupState();
+		}
+
+		private void UpdateLinkTextBoxGroupState()
+		{
+			InnerTextGroupNoBox.Enabled = !UseFileNamesBox.Checked;
 		}
 	}
 
