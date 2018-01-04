@@ -1,4 +1,6 @@
 # DownloadAllTheLinks
-A program to asynchronously download all the downloadable links from the web page.. almost all..
+A program to asynchronously download all the downloadable links from the web page.. almost all.. 
+Define your own regex to detect downloadable links. 
+Define your own filenames with format string, for example "part{1}.rar", where {1} is the number of regex captured group
 
-![Screenshot](https://i.snag.gy/deFZgE.jpg)
+![Screenshot](https://i.snag.gy/0WN3ci.jpg)
