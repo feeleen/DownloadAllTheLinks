@@ -28,8 +28,9 @@ namespace DownloaderAllTheLinks
 
 		string placeholder = "fileTypes";
 
-		const string regPattern = @"(<a.+?href=""([^\""]+?)"".*?>(.+?(fileTypes))<\/a)";
-		
+		const string regPattern = @"(<a.+?href=""([^\""]+?)""[^>]*?>([^<]+?(filetypes))<\/a)";
+
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -73,6 +74,9 @@ namespace DownloaderAllTheLinks
 
 			try
 			{
+				AppDomain domain = AppDomain.CurrentDomain;
+				domain.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromSeconds(5));
+
 				Hashtable links = new Hashtable();
 
 				List<string> fileTypes = GetFileTypes();
@@ -81,7 +85,13 @@ namespace DownloaderAllTheLinks
 				Regex reg = new Regex(CurrentRegPattern, RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 				
 				Uri host = new Uri(textBox1.Text);
-				foreach (Match m in reg.Matches(text))
+				if (!reg.IsMatch(text))
+				{
+					MessageBox.Show("No matches found");
+					return;
+				}
+				MatchCollection mcol = reg.Matches(text);
+				foreach (Match m in mcol)
 				{
 					string link = m.Groups[GetLinkGroupNumber()].Value;
 					string fullLink = "";
