@@ -28,7 +28,7 @@ namespace DownloaderAllTheLinks
 
 		string placeholder = "filetypes";
 
-		const string regPattern = @"(<a.+?href=""([^\""]+?)""[^>]*?>([^<]+?(filetypes))<\/a)";
+		const string regPattern = @"(<a.+?href=""([^\""]+?(filetypes))""[^>]*?>([^<]+?)<\/a)";
 
 
 		public Form1()

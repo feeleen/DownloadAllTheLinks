@@ -52,7 +52,6 @@
 			this.button4 = new System.Windows.Forms.Button();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
-			this.RegexBox = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.ResetRegExBtn = new System.Windows.Forms.Button();
@@ -60,6 +59,7 @@
 			this.LinkGroupNoBox = new System.Windows.Forms.TextBox();
 			this.InnerTextGroupNoBox = new System.Windows.Forms.TextBox();
 			this.label8 = new System.Windows.Forms.Label();
+			this.RegexBox = new System.Windows.Forms.ComboBox();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -297,15 +297,6 @@
 			this.label4.TabIndex = 8;
 			this.label4.Text = "Reg. expression";
 			// 
-			// RegexBox
-			// 
-			this.RegexBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.RegexBox.Location = new System.Drawing.Point(101, 89);
-			this.RegexBox.Name = "RegexBox";
-			this.RegexBox.Size = new System.Drawing.Size(536, 20);
-			this.RegexBox.TabIndex = 7;
-			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
@@ -370,11 +361,26 @@
 			this.label8.TabIndex = 13;
 			this.label8.Text = "Or  Set string format with groups (for example: {1}.part{1}.rar)";
 			// 
+			// RegexBox
+			// 
+			this.RegexBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.RegexBox.FormattingEnabled = true;
+			this.RegexBox.Items.AddRange(new object[] {
+            "(<a.+?href=\"([^\\\"]+?)\"[^>]*?>)",
+            "<a.+?href=\"([^\\\"]+?)\"[^>]*?>([^<]+?)<\\/a>",
+            "<a.+?href=\"([^\\\"]+?)(filetypes)\"[^>]*?>([^<]+?)<\\/a>"});
+			this.RegexBox.Location = new System.Drawing.Point(98, 87);
+			this.RegexBox.Name = "RegexBox";
+			this.RegexBox.Size = new System.Drawing.Size(536, 21);
+			this.RegexBox.TabIndex = 14;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(821, 482);
+			this.Controls.Add(this.RegexBox);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.InnerTextGroupNoBox);
@@ -383,7 +389,6 @@
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.label4);
-			this.Controls.Add(this.RegexBox);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.UseFileNamesBox);
@@ -438,7 +443,6 @@
 		private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.TextBox RegexBox;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Button ResetRegExBtn;
@@ -446,6 +450,7 @@
 		private System.Windows.Forms.TextBox LinkGroupNoBox;
 		private System.Windows.Forms.TextBox InnerTextGroupNoBox;
 		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.ComboBox RegexBox;
 	}
 }
 
