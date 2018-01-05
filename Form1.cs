@@ -26,7 +26,7 @@ namespace DownloaderAllTheLinks
 		List<string> images = new List<string> { "png", "tiff", "jpg", "jpeg", "gif", "ico"};
 		List<string> archives = new List<string> { "rar", "zip", "tar", "7z"};
 
-		string placeholder = "fileTypes";
+		string placeholder = "filetypes";
 
 		const string regPattern = @"(<a.+?href=""([^\""]+?)""[^>]*?>([^<]+?(filetypes))<\/a)";
 
