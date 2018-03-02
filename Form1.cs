@@ -16,15 +16,17 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace DownloaderAllTheLinks
 {
 	public partial class Form1 : Form
 	{
 		private int sortColumn = -1;
-		
+		private List<WebClient> clients = new List<WebClient>();
 		List<string> office = new List<string> { "pdf", "doc", "docx", "xls", "xlsx", "odt", "rtf", "txt", "ppt", "pptx", "ods","xps","csv","html", "shtml"};
 		List<string> images = new List<string> { "png", "tiff", "jpg", "jpeg", "gif", "ico"};
 		List<string> archives = new List<string> { "rar", "zip", "tar", "7z"};
+		
 
 		string placeholder = "filetypes";
 
@@ -40,6 +42,7 @@ namespace DownloaderAllTheLinks
 			{
 				Directory.CreateDirectory(downloadsPath);
 			}
+			
 			RegexBox.Text = regPattern;
 			FolderBox.Text = downloadsPath;
 			UpdateLinkTextBoxGroupState();
@@ -177,17 +180,25 @@ namespace DownloaderAllTheLinks
 			{
 				Directory.CreateDirectory(FolderBox.Text);
 			}
-			await GrabThemAll();
-			MessageBox.Show("Finished");
-			StatusBox.Text = "Finished!";
+			try
+			{
+				stopBtn.Enabled = true;
+				await GrabThemAll();
+			}
+			catch { }
+			finally
+			{
+				MessageBox.Show("Finished");
+				StatusBox.Text = "Finished!";
+				ProgressBox.Value = 0;
+			}
 		}
 
 		private async Task GrabThemAll()
 		{
-			int count = 0;
+			int counter = 0;
 			ProgressBox.Value = 0;
 			ProgressBox.Maximum = 0;
-			StatusBox.Text = "Downloading..";
 			foreach (ListViewItem lvi in listView1.Items)
 			{
 				if (lvi.Checked)
@@ -197,12 +208,14 @@ namespace DownloaderAllTheLinks
 			}
 			string dir = FolderBox.Text;
 			Dictionary<string, string> urls = new Dictionary<string, string>();
+			int checkedCount = listView1.CheckedItems.Count;
 			foreach (ListViewItem lvi in listView1.Items)
 			{
 				if (lvi.Checked)
 				{
 					
-					count++;
+					counter++;
+					StatusBox.Text = "Downloading " + counter + " of " + checkedCount + "...";
 					string localFile = dir + "\\" + lvi.SubItems[1].Text + (!UseFileNamesBox.Checked && !lvi.Text.EndsWith("/") && !lvi.Text.Substring(lvi.Text.LastIndexOf('.')).Contains("/") ? ("." + lvi.Text.Substring(lvi.Text.LastIndexOf('.'))) : "");
 					if (UseFileNamesBox.Checked)
 					{
@@ -219,9 +232,10 @@ namespace DownloaderAllTheLinks
 					
 					using (WebClient client = new WebClient())
 					{
+						clients.Add(client);
 						client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
 						await client.DownloadFileTaskAsync(new Uri(UriString), localFile);
-						UpdateProgress(1);
+						UpdateProgress(1, checkedCount, counter);
 						//client.DownloadFile(new Uri(UriString), localFile);
 					}
 				}
@@ -258,7 +272,7 @@ namespace DownloaderAllTheLinks
 			*/
 		}
 
-		public void UpdateProgress(int v)
+		public void UpdateProgress(int v, int total, int current)
 		{
 			/*
 			ProgressBox.InvokeIfRequired(() =>
@@ -270,11 +284,13 @@ namespace DownloaderAllTheLinks
 			*/
 			if (this.InvokeRequired)
 			{
-				this.Invoke(new Action(() => UpdateProgress(v)));
+				this.Invoke(new Action(() => UpdateProgress(v, total, current)));
 			}
 			else
 			{
 				ProgressBox.Value += v;
+				
+				//TaskbarItemInfo.ProgressValue = current / (double)total;
 			}
 			
 		}
@@ -424,6 +440,20 @@ namespace DownloaderAllTheLinks
 			}
 			Clipboard.SetDataObject(sb.ToString());
 
+		}
+
+		private void stopBtn_Click(object sender, EventArgs e)
+		{
+			foreach (WebClient client in clients)
+			{
+				try
+				{
+					if (client!= null)
+						client.CancelAsync();
+				}
+				catch { }
+				stopBtn.Enabled = false;
+			}
 		}
 	}
 

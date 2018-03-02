@@ -60,6 +60,7 @@
 			this.InnerTextGroupNoBox = new System.Windows.Forms.TextBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.RegexBox = new System.Windows.Forms.ComboBox();
+			this.stopBtn = new System.Windows.Forms.Button();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -375,6 +376,18 @@
 			this.RegexBox.Size = new System.Drawing.Size(536, 21);
 			this.RegexBox.TabIndex = 14;
 			// 
+			// stopBtn
+			// 
+			this.stopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.stopBtn.Enabled = false;
+			this.stopBtn.Location = new System.Drawing.Point(734, 130);
+			this.stopBtn.Name = "stopBtn";
+			this.stopBtn.Size = new System.Drawing.Size(75, 31);
+			this.stopBtn.TabIndex = 1;
+			this.stopBtn.Text = "Stop";
+			this.stopBtn.UseVisualStyleBackColor = true;
+			this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -404,6 +417,7 @@
 			this.Controls.Add(this.CheckAllBtn);
 			this.Controls.Add(this.button4);
 			this.Controls.Add(this.button3);
+			this.Controls.Add(this.stopBtn);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.listView1);
@@ -451,6 +465,7 @@
 		private System.Windows.Forms.TextBox InnerTextGroupNoBox;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.ComboBox RegexBox;
+		private System.Windows.Forms.Button stopBtn;
 	}
 }
 
