@@ -234,6 +234,8 @@ namespace DownloaderAllTheLinks
 					{
 						clients.Add(client);
 						client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+
+						client.DownloadProgressChanged += Client_DownloadProgressChanged;
 						await client.DownloadFileTaskAsync(new Uri(UriString), localFile);
 						UpdateProgress(1, checkedCount, counter);
 						//client.DownloadFile(new Uri(UriString), localFile);
@@ -270,6 +272,23 @@ namespace DownloaderAllTheLinks
 
 			Task.WaitAll(tasks);
 			*/
+		}
+
+		private void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+		{
+			if (this.InvokeRequired)
+			{
+				this.Invoke(new Action(() => Client_DownloadProgressChanged(sender, e)));
+			}
+			else
+			{
+				if (DateTime.Now.Ticks % 100 == 0)
+				{
+					toolStripStatusLabel1.Text = String.Format("Текущий файл: {0} из {1}, {2}%", SizeString(e.BytesReceived), SizeString(e.TotalBytesToReceive), e.ProgressPercentage);
+				}
+
+				//TaskbarItemInfo.ProgressValue = current / (double)total;
+			}
 		}
 
 		public void UpdateProgress(int v, int total, int current)
@@ -454,6 +473,35 @@ namespace DownloaderAllTheLinks
 				catch { }
 				stopBtn.Enabled = false;
 			}
+		}
+
+		static readonly string[] SizeSuffixes =
+				   { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+		
+		static string SizeString(Int64 value, int decimalPlaces = 1)
+		{
+			if (decimalPlaces < 0) { throw new ArgumentOutOfRangeException("decimalPlaces"); }
+			if (value < 0) { return "-" + SizeString(-value); }
+			if (value == 0) { return string.Format("{0:n" + decimalPlaces + "} bytes", 0); }
+
+			// mag is 0 for bytes, 1 for KB, 2, for MB, etc.
+			int mag = (int)Math.Log(value, 1024);
+
+			// 1L << (mag * 10) == 2 ^ (10 * mag) 
+			// [i.e. the number of bytes in the unit corresponding to mag]
+			decimal adjustedSize = (decimal)value / (1L << (mag * 10));
+
+			// make adjustment when the value is large enough that
+			// it would round up to 1000 or more
+			if (Math.Round(adjustedSize, decimalPlaces) >= 1000)
+			{
+				mag += 1;
+				adjustedSize /= 1024;
+			}
+
+			return string.Format("{0:n" + decimalPlaces + "} {1}",
+				adjustedSize,
+				SizeSuffixes[mag]);
 		}
 	}
 

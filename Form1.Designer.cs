@@ -48,6 +48,7 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.ProgressBox = new System.Windows.Forms.ToolStripProgressBar();
 			this.StatusBox = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.InvertBtn = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
 			this.label3 = new System.Windows.Forms.Label();
@@ -240,7 +241,8 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ProgressBox,
-            this.StatusBox});
+            this.StatusBox,
+            this.toolStripStatusLabel1});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 460);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(821, 22);
@@ -256,7 +258,13 @@
 			// 
 			this.StatusBox.AutoSize = false;
 			this.StatusBox.Name = "StatusBox";
-			this.StatusBox.Size = new System.Drawing.Size(300, 17);
+			this.StatusBox.Size = new System.Drawing.Size(180, 17);
+			// 
+			// toolStripStatusLabel1
+			// 
+			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+			this.toolStripStatusLabel1.Size = new System.Drawing.Size(293, 17);
+			this.toolStripStatusLabel1.Spring = true;
 			// 
 			// InvertBtn
 			// 
@@ -466,6 +474,7 @@
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.ComboBox RegexBox;
 		private System.Windows.Forms.Button stopBtn;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 	}
 }
 
