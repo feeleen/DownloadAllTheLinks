@@ -82,9 +82,8 @@ namespace DownloaderAllTheLinks
 
 				Hashtable links = new Hashtable();
 
-				List<string> fileTypes = GetFileTypes();
-
-				string CurrentRegPattern = RegexBox.Text.Replace(placeholder, String.Join("|", fileTypes));
+				
+				string CurrentRegPattern = RegexBox.Text;
 				Regex reg = new Regex(CurrentRegPattern, RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
 				
 				Uri host = new Uri(textBox1.Text);
@@ -146,19 +145,6 @@ namespace DownloaderAllTheLinks
 		private int GetLinkTextGroupNumber()
 		{
 			return Convert.ToInt32(InnerTextGroupNoBox.Text);
-		}
-
-		private List<string> GetFileTypes()
-		{
-			List<string> fileTypes = new List<string>();
-			if (OfficeBox.Checked)
-				fileTypes = fileTypes.Concat(office).ToList();
-			if (ArchivesBox.Checked)
-				fileTypes = fileTypes.Concat(archives).ToList();
-			if (ImagesBox.Checked)
-				fileTypes = fileTypes.Concat(images).ToList();
-
-			return fileTypes;
 		}
 
 		private void button1_Click(object sender, EventArgs e)
