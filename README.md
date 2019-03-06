@@ -1,4 +1,5 @@
 # DownloadAllTheLinks
+[![Build status](https://ci.appveyor.com/api/projects/status/r2vmf4b004g08vtu?svg=true)](https://ci.appveyor.com/project/feeleen/downloadallthelinks)
 
 [![Build Status](https://travis-ci.com/feeleen/DownloadAllTheLinks.svg?branch=master)](https://travis-ci.com/feeleen/DownloadAllTheLinks)
 
